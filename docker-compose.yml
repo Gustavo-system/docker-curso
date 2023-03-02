@@ -1,0 +1,37 @@
+# siempre iniciamos con la version que se usara para ejecutar los comandos
+version: "3"
+
+services:
+  # nombre del servicio
+  db:
+    # nombre del contenedor
+    container_name: posgrest_db
+    # definimos la imagenes que se usara
+    image: postgres:15.1
+    # definimos el volumen que usara este contenedor
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    # se declaran las variables de entrono
+    environment:
+      - POSTGRES_PASSWORD=123456
+
+  pgAdmin:
+    # depende de otro servicio, importa el orden de como se estrucutura el yml
+    depends_on:
+      - db
+    container_name: pgAdmin
+    image: dpage/pgadmin4:6.17
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=123456
+      - PGADMIN_DEFAULT_EMAIL=superman@google.com
+    # se definen los puertos que se usaran
+    ports:
+      # puerto maquina : puerto contenedor
+      - "8080:80"
+
+# se requiere deifinir el volumen que se usara en el contenedor, para saber si es uno existente o uno nuevo
+volumes:
+  # nombre del volumen
+  postgres-db:
+    # define que se use un volumen externo
+    external: true
