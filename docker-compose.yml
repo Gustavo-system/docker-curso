@@ -10,7 +10,8 @@ services:
     image: postgres:15.1
     # definimos el volumen que usara este contenedor
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      # - postgres-db:/var/lib/postgresql/data
+      - ./postgres-db:/var/lib/postgresql/data
     # se declaran las variables de entrono
     environment:
       - POSTGRES_PASSWORD=123456
@@ -28,6 +29,8 @@ services:
     ports:
       # puerto maquina : puerto contenedor
       - "8080:80"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
 
 # se requiere deifinir el volumen que se usara en el contenedor, para saber si es uno existente o uno nuevo
 volumes:
