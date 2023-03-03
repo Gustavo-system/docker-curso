@@ -329,7 +329,13 @@ exit
 <br>
 
 ## Modulo Cuatro - Docker Compose
-> Multipes contenedores
+
+---
+
+## Multipes contenedores
+
+---
+
 
 Ejecutamos la configuracion creada en el docker-compose
 ```
@@ -384,7 +390,39 @@ volumes:
     external: true
 ```
 
+---
 
+## Variables de entorno
+
+---
+
+Se utilizan para no exponer todos los datos privados cuando se suba al contenedor o al repositorio
+
+1. Crear un archivo .env
+
+- Ejemplo de archivo .env
+```
+ENV_NAME_CONTAINER = postgres-db
+ENV_NAME_USER = postgres
+ENV_PASSWORD = 123456
+```
+
+- Se invocan en el archivo "docker_componse.yml"
+	- Se coloca dento de la siguente sintaxis = ${env}
+	
+```
+version: "3"
+
+services:
+  db:
+    container_name: ${ENV_NAME_CONTAINER}
+    image: postgres:15.1
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${ENV_PASSWORD}
+	  - POSTGRES_USER=${ENV_NAME_USER}
+```
 
 <br>
 <br>
