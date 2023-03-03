@@ -407,9 +407,9 @@ ENV_NAME_USER = postgres
 ENV_PASSWORD = 123456
 ```
 
-- Se invocan en el archivo "docker_componse.yml"
+2. Se invocan en el archivo "docker_componse.yml"
 	- Se coloca dento de la siguente sintaxis = ${env}
-	
+
 ```
 version: "3"
 
