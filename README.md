@@ -436,7 +436,85 @@ services:
 
 ---
 
+Dentro del Dockerfile son solo instrucciones que se ejecutaran en orden para poder construir nuestra imagen.
 
+
+- Ejemplo basico
+
+```
+# indicamos la imagen base en la que montaremos nuestra imagen
+FROM <imagen-base>
+
+# navegar a una carpeta, en otras palabras un cd a
+WORKDIR <ruta-carpeta>
+
+# copiar archivos
+COPY <ruta-equipo> <ruta-imagen>
+
+# ejecutamos comandos
+RUN <comando>
+
+# ejecutamos comandos de consola
+CMD ["<comando>", "<valor-comando>"]
+```
+
+Comando para contruir una imagen
+
+1. Es importante tomar en cuanta que debemos estar dentro de la carpata a la raiz de nuestro proyecto
+
+- build = instruccion para decirle a docker que contruya la imagen
+- \--tag = le podemos agregar un tag 
+```
+docker build --tag <nombre-tag> <path-relativo>
+
+# ejemplo
+docker build --tag version-uno .
+```
+
+Recontruir una imagen
+
+```
+
+```
+
+Renombrar una imagen
+```
+docker image tag SOURCE:TAG TARGET_NAME:TAG
+
+# ejemplo
+docker image tag perrito:1.0.0 perrito:dragon
+```
+
+
+- ejemplo practico con nodejs
+
+```
+FROM node:19.2-alpine3.16
+
+# cd app
+WORKDIR  /app
+
+# Dest /app
+COPY package.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Dest /app
+COPY . .
+
+# Realizar testing
+RUN npm run test
+
+# Eliminar archivos y directorios no necesarios en PROD
+RUN rm -rf tests && rm -rf node_modules
+
+# Unicamente las dependencias de prod
+RUN npm install --prod
+
+# Comando run de la imagen
+CMD [ "node", "app.js" ]
+```
 
 
 
